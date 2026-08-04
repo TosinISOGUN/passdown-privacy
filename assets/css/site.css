@@ -67,7 +67,7 @@ th { background:var(--panel); font-weight:700; }
 .nav-mid a { color:#E4F3F1; text-decoration:none; font-weight:600; font-size:.96rem; padding:6px 0; border-bottom:2px solid transparent; transition:border-color .2s,color .2s; }
 .nav-mid a:hover, .nav-mid a.active { border-color:#fff; }
 .nav-right { display:flex; align-items:center; gap:14px; }
-.hamburger { display:none; background:none; border:0; cursor:pointer; padding:8px; }
+.hamburger { display:none; background:none; border:0; cursor:pointer; padding:11px; }
 .hamburger span { display:block; width:22px; height:2px; background:#fff; border-radius:2px; margin:5px 0; transition:transform .3s ease, opacity .2s ease; }
 .hamburger.open span:nth-child(1){ transform:translateY(7px) rotate(45deg); }
 .hamburger.open span:nth-child(2){ opacity:0; }
@@ -259,14 +259,20 @@ ol.steps li::before { content:counter(step); position:absolute; left:0; top:12px
   .collage{ grid-template-columns:1fr; }
   .foot-top{ flex-direction:column; gap:24px; }
   .docs-layout{ display:block; }
-  .docs-side{ width:auto; position:static; height:auto; border-right:0; border-bottom:1px solid var(--line); padding:16px 20px; }
-  .docs-side nav{ display:flex; flex-wrap:wrap; gap:4px; }
-  .docs-side nav a{ border-left:0; padding:6px 10px; }
+  .docs-side{ width:auto; position:static; height:auto; border-right:0; border-bottom:1px solid var(--line); padding:14px 0; }
+  .docs-side .side-title{ padding:0 20px; }
+  .docs-side nav{ display:flex; flex-wrap:nowrap; overflow-x:auto; -webkit-overflow-scrolling:touch; gap:6px; padding:0 20px; scrollbar-width:none; }
+  .docs-side nav::-webkit-scrollbar{ display:none; }
+  .docs-side nav a{ border-left:0; padding:7px 12px; white-space:nowrap; flex:none; background:var(--panel); border-radius:999px; }
+  .docs-side nav a.active{ border-left:0; background:var(--teal-50); }
   .docs-main{ padding:28px 20px 48px; }
 }
 @media (max-width:560px){
   section.block{ padding:56px 0; }
   .principles{ grid-template-columns:1fr; }
   .util{ font-size:.78rem; }
+  .hero-glow{ width:340px; height:340px; }
+  .promo-card{ padding:22px 18px 20px; }
+  .promo-card--tight{ padding:14px; }
 }
 @media (prefers-reduced-motion: reduce){ *{ animation:none!important; scroll-behavior:auto; } .reveal{ opacity:1; transform:none; transition:none; } .hero-glow{ animation:none; } }
