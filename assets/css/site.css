@@ -83,7 +83,7 @@ th { background:var(--panel); font-weight:700; }
 .drawer a.d-link { display:block; color:#fff; text-decoration:none; font-weight:600; font-size:1.05rem; padding:14px 2px; border-bottom:1px solid rgba(255,255,255,.16); }
 .drawer .btn { margin-top:20px; justify-content:center; }
 body.drawer-open { overflow:hidden; }
-@media (max-width:820px){ .nav-mid{ display:none; } .util{ display:none; } .hamburger{ display:block; } .nav-right .btn-teal{ display:none; } }
+@media (max-width:820px){ .nav-mid{ display:none; } .util{ display:none; } .hamburger{ display:block; } .nav-right .btn{ display:none; } }
 
 /* hero */
 .hero { position:relative; margin-top:-74px; padding-top:74px; background:linear-gradient(150deg,#0E3247,var(--ink) 65%); color:#fff; overflow:hidden; }
