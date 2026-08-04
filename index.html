@@ -68,10 +68,6 @@
           "acceptedAnswer": { "@type": "Answer", "text": "No. Passdown reads the on-call schedule you already maintain in Jira Service Management — it never builds or competes with rotation or delegation logic." }
         },
         {
-          "@type": "Question", "name": "Does Passdown carry the Runs on Atlassian badge?",
-          "acceptedAnswer": { "@type": "Answer", "text": "No. Reading JSM's on-call schedule reliably requires a small hosted component outside Forge's own sandbox, so the base install does not currently qualify for Runs on Atlassian." }
-        },
-        {
           "@type": "Question", "name": "Does Passdown post to Slack or Teams?",
           "acceptedAnswer": { "@type": "Answer", "text": "Not yet. Slack and Teams push is planned as a future, explicitly opt-in admin setting — it is off by default and not part of the current release." }
         }
@@ -319,15 +315,6 @@
   </div>
 </section>
 
-<section class="block reveal" style="background:var(--panel); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
-  <div class="wrap">
-    <div class="roa-note">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 9v4M12 17h.01"/><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/></svg>
-      <p>Passdown does not currently carry the "Runs on Atlassian" badge. Reading JSM's on-call schedule reliably requires a small hosted component outside Forge's own sandbox — see the <a href="security.html">Security page</a> for the full explanation.</p>
-    </div>
-  </div>
-</section>
-
 <section class="block reveal">
   <div class="wrap">
     <div class="section-head">
@@ -352,12 +339,6 @@
           <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
         </summary>
         <p>Not yet. Slack and Teams push is planned as a future, explicitly opt-in admin setting — off by default and not part of the current build. See <a href="docs.html#roadmap">Documentation</a>.</p>
-      </details>
-      <details class="faq-item">
-        <summary>Why doesn't Passdown carry the Runs on Atlassian badge?
-          <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
-        </summary>
-        <p>Reading JSM's on-call schedule reliably from an app currently requires a small hosted component outside Forge's own sandbox. That's real, disclosed external egress — see the <a href="security.html">Security page</a> for the full detail.</p>
       </details>
       <details class="faq-item">
         <summary>What data does Passdown access or store?

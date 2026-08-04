@@ -174,10 +174,6 @@ section.block { padding:80px 0; }
 .collage .real-shot .frame { aspect-ratio:4/3; }
 
 /* RoA disclosure banner */
-.roa-note { display:flex; gap:14px; align-items:flex-start; background:var(--amber-flag-bg); border:1px solid #F3D9AE; border-radius:8px; padding:16px 18px; margin:0 auto; max-width:760px; }
-.roa-note svg { flex:none; width:20px; height:20px; color:var(--amber-flag); margin-top:2px; }
-.roa-note p { margin:0; font-size:.92rem; color:#7C4A0F; line-height:1.55; }
-.roa-note a { color:#7C4A0F; text-decoration:underline; font-weight:600; }
 
 /* FAQ accordion */
 .faq-list { max-width:760px; margin:0 auto; }
