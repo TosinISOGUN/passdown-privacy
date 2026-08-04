@@ -1,0 +1,5 @@
+# Raw screenshot captures (space/timestamp-named originals). The site only
+# uses the cleanly-renamed copies in assets/img/shot-*.png -- keep the raw
+# originals local, don't publish duplicates of the same images.
+assets/img/Screenshot *.png
+assets/img/screencapture-*.png
