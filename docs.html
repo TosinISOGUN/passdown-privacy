@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="author" content="Isogun Labs">
+<meta name="theme-color" content="#0B1B26">
+<title>Passdown — Documentation</title>
+<meta name="description" content="Documentation for Passdown, the JSM app that writes and posts automated shift-handoff briefs, plus on-demand per-ticket summaries.">
+<link rel="canonical" href="https://passdown.isogunlabs.com/docs.html">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Passdown — Documentation">
+<meta property="og:description" content="How the automated shift-handoff brief works, how the on-demand summary works, and what's still coming.">
+<meta property="og:url" content="https://passdown.isogunlabs.com/docs.html">
+<meta property="og:image" content="https://passdown.isogunlabs.com/assets/img/passdown-logo-512.png">
+<meta property="og:image:width" content="512">
+<meta property="og:image:height" content="512">
+<meta property="og:site_name" content="Passdown">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@isogunlabs">
+<meta name="twitter:title" content="Passdown — Documentation">
+<meta name="twitter:description" content="How the automated shift-handoff brief works, how the on-demand summary works, and what's still coming.">
+<meta name="twitter:image" content="https://passdown.isogunlabs.com/assets/img/passdown-logo-512.png">
+
+<link rel="icon" href="/assets/img/passdown-logo-144.png" sizes="144x144" type="image/png">
+<link rel="icon" href="/assets/img/passdown-logo-96.png" sizes="96x96" type="image/png">
+<link rel="apple-touch-icon" href="/assets/img/passdown-logo-144.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Passdown", "item": "https://passdown.isogunlabs.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Documentation", "item": "https://passdown.isogunlabs.com/docs.html" }
+  ]
+}
+</script>
+
+<link rel="stylesheet" href="/assets/css/site.css?v=1">
+</head>
+<body>
+
+<nav class="nav nav-solid">
+  <div class="wrap">
+    <a class="logo" href="/">
+      <img src="/assets/img/passdown-logo-144.png" alt="" width="36" height="36">
+      <b>Passdown</b>
+    </a>
+    <div class="nav-mid">
+      <a href="index.html">Home</a>
+      <a href="docs.html" class="active">Documentation</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="security.html">Security</a>
+    </div>
+    <div class="nav-right">
+      <span class="btn btn-disabled btn-sm">Coming soon to the Marketplace</span>
+      <button class="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-drawer">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div class="drawer-overlay"></div>
+<aside class="drawer" id="mobile-drawer">
+  <div class="d-head">
+    <a class="logo" href="/">
+      <img src="/assets/img/passdown-logo-144.png" alt="" width="32" height="32">
+      <b>Passdown</b>
+    </a>
+    <button class="d-close" aria-label="Close menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
+    </button>
+  </div>
+  <nav>
+    <a class="d-link" href="index.html">Home</a>
+    <a class="d-link" href="docs.html">Documentation</a>
+    <a class="d-link" href="privacy.html">Privacy</a>
+    <a class="d-link" href="security.html">Security</a>
+  </nav>
+  <a class="btn btn-teal" href="mailto:support@isogunlabs.com">Get notified at launch</a>
+</aside>
+
+<div class="docs-layout">
+
+  <aside class="docs-side">
+    <p class="side-title">Documentation</p>
+    <nav id="sidenav">
+      <a href="#overview">Overview</a>
+      <a href="#requirements">Requirements</a>
+      <a href="#install">Installation</a>
+      <a href="#handoff">The shift-handoff brief</a>
+      <a href="#ticket">On-demand ticket summary</a>
+      <a href="#roadmap">Roadmap: Slack &amp; Teams</a>
+      <a href="#data">Data &amp; permissions</a>
+      <a href="#licensing">Licensing &amp; billing</a>
+      <a href="#troubleshooting">Troubleshooting</a>
+      <a href="#support">Support</a>
+    </nav>
+  </aside>
+
+  <main class="docs-main">
+    <h1 class="page-title">Documentation</h1>
+    <p class="lede">Everything you need to understand how Passdown works, before and after it installs.</p>
+
+    <section id="overview">
+      <h2 class="sec">Overview</h2>
+      <p>
+        Passdown solves one specific gap: every shift-based support team loses time at the start
+        of a shift reconstructing what the previous person already knew. Passdown reads what
+        actually happened on a ticket — comments, status changes, fields — and writes a
+        plain-language account of it. The flagship feature fires automatically at shift
+        boundaries, read from Jira Service Management's own on-call schedule. The same engine
+        also runs on demand, for a single ticket, any time someone needs to catch up fast.
+      </p>
+      <p>
+        Passdown does not build or replace any rotation, scheduling, or delegation logic — it
+        reads the schedule an existing JSM setup already maintains.
+      </p>
+    </section>
+
+    <section id="requirements">
+      <h2 class="sec">Requirements</h2>
+      <ul>
+        <li>A <strong>Jira Service Management Cloud</strong> project with an on-call schedule configured (for the automated shift-handoff feature — the on-demand per-ticket summary works on any Jira Cloud issue).</li>
+        <li>The installing admin's account needs visibility into the on-call schedules Passdown should watch.</li>
+        <li>An active Passdown subscription for installations above the free tier — see <a class="inline" href="#licensing">Licensing &amp; billing</a>.</li>
+      </ul>
+    </section>
+
+    <section id="install">
+      <h2 class="sec">Installation</h2>
+      <div class="note">
+        Passdown is still in development and has not yet been submitted to the Atlassian
+        Marketplace. This section describes how installation will work once it is live —
+        <a class="inline" href="mailto:support@isogunlabs.com">contact us</a> to be notified when
+        that happens.
+      </div>
+      <ol class="steps">
+        <li>A Jira site administrator installs Passdown from the Atlassian Marketplace listing onto their Jira Service Management Cloud site.</li>
+        <li>The install confirms the requested permission scopes (see <a class="inline" href="#data">Data &amp; permissions</a>) before completing.</li>
+        <li>Once installed, the on-demand summary panel appears on issue views automatically, and the scheduled shift-boundary check begins running against any on-call schedules the app can see.</li>
+      </ol>
+    </section>
+
+    <section id="handoff">
+      <h2 class="sec">The shift-handoff brief</h2>
+      <p>Passdown checks the on-call schedule at a short interval. When it detects that the on-call person for a schedule has changed:</p>
+      <ol class="steps">
+        <li>It finds every ticket still open and assigned to the outgoing person.</li>
+        <li>For each one, it generates a plain-language brief covering what happened during the shift, what's currently blocking (if anything), and what remains to be done.</li>
+        <li>The brief is posted as a native Jira comment with the incoming person @-mentioned.</li>
+        <li>The ticket is also reassigned to the incoming person — the primary, guaranteed notification signal, since an app-authored mention is not confirmed to reliably trigger Jira's own notification pipeline the same way a human mention does.</li>
+      </ol>
+      <div class="note">
+        A schedule whose current on-call is a team or an escalation, rather than a single person,
+        is skipped for this automatic handoff — there's no single incoming person to assign to.
+        This is a known, current limitation, not a silent failure.
+      </div>
+    </section>
+
+    <section id="ticket">
+      <h2 class="sec">On-demand ticket summary</h2>
+      <p>
+        The same generation engine is also available as a panel on any individual ticket. Open
+        it any time — mid-shift, after time off, picking up an escalation — to get a
+        plain-language summary of that ticket's history without waiting for a shift boundary.
+      </p>
+    </section>
+
+    <section id="roadmap">
+      <h2 class="sec">Roadmap: Slack &amp; Teams</h2>
+      <p>
+        Pushing the handoff brief to Slack or Teams, in addition to the native Jira comment, is
+        planned as a future release. It will be an explicit, admin-controlled opt-in — off by
+        default, and not part of the current build. Enabling it will mean the specific
+        installation gives up eligibility for the "Runs on Atlassian" badge, since it requires
+        egress outside Atlassian's platform; see <a class="inline" href="security.html">Security</a>
+        for what that means today, independent of this future toggle.
+      </p>
+    </section>
+
+    <section id="data">
+      <h2 class="sec">Data &amp; permissions</h2>
+      <ul>
+        <li><strong>Reads ticket content:</strong> <code>read:jira-work</code> — summary, comments, status history, and fields needed to write an accurate summary.</li>
+        <li><strong>Posts comments and reassigns tickets:</strong> <code>write:jira-work</code>.</li>
+        <li><strong>Reads the on-call schedule:</strong> <code>read:ops-config:jira-service-management</code>, used only to detect shift boundaries.</li>
+        <li><strong>Bounded storage:</strong> <code>storage:app</code> — one small record per on-call schedule (who's currently on-call), overwritten every check, never a growing history.</li>
+      </ul>
+      <p>Full detail, including the hosted component used to read the schedule, is in the <a class="inline" href="security.html">security policy</a> and <a class="inline" href="privacy.html">privacy policy</a>.</p>
+    </section>
+
+    <section id="licensing">
+      <h2 class="sec">Licensing &amp; billing</h2>
+      <p>
+        Passdown is free for small teams (up to 10 users on the installation), with a paid tier
+        above that threshold, billed through Atlassian. This mirrors the visibility-first pricing
+        approach used for Isogun Labs' other early-stage apps — the goal right now is installs
+        and real usage, not maximizing near-term revenue.
+      </p>
+    </section>
+
+    <section id="troubleshooting">
+      <h2 class="sec">Troubleshooting</h2>
+
+      <h3>A shift boundary happened, but no brief was posted.</h3>
+      <p>
+        Check whether the outgoing person had any open tickets assigned to them at the time —
+        Passdown only acts on tickets that were actually open and assigned. Also confirm the
+        on-call schedule's current participant is a single person, not a team or escalation (see
+        <a class="inline" href="#handoff">The shift-handoff brief</a>).
+      </p>
+
+      <h3>The @-mention didn't send a notification, but the ticket was reassigned.</h3>
+      <p>
+        This is expected behavior, not a bug — reassignment is the guaranteed signal by design.
+        The mention is a best-effort addition on top of it.
+      </p>
+    </section>
+
+    <section id="support">
+      <h2 class="sec">Support</h2>
+      <p>
+        Questions, problems, or feedback? Email
+        <a class="inline" href="mailto:support@isogunlabs.com">support@isogunlabs.com</a>.
+        Best-effort support; typical response time is 1–2 business days.
+      </p>
+    </section>
+  </main>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-bottom" style="border-top:0; padding-top:0;">
+      Passdown — Automated Shift Handoffs for JSM ·
+      <a href="index.html">Home</a> ·
+      <a href="docs.html">Documentation</a> ·
+      <a href="privacy.html">Privacy</a> ·
+      <a href="security.html">Security</a> ·
+      <a href="https://isogunlabs.com/">Isogun Labs</a><br>
+      An independent app by Isogun Labs, in development ahead of Atlassian Marketplace submission — not affiliated with or endorsed by Atlassian.
+    </div>
+  </div>
+</footer>
+
+<script src="/assets/js/site.js?v=1" defer></script>
+</body>
+</html>

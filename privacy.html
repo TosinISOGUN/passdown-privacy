@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="author" content="Isogun Labs">
+<meta name="theme-color" content="#0B1B26">
+<title>Passdown — Privacy Policy</title>
+<meta name="description" content="Privacy policy for Passdown, the JSM shift-handoff app. What ticket and schedule data it reads, and what it stores.">
+<link rel="canonical" href="https://passdown.isogunlabs.com/privacy.html">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Passdown — Privacy Policy">
+<meta property="og:description" content="What data Passdown accesses, what it stores, and where it goes.">
+<meta property="og:url" content="https://passdown.isogunlabs.com/privacy.html">
+<meta property="og:image" content="https://passdown.isogunlabs.com/assets/img/passdown-logo-512.png">
+<meta property="og:image:width" content="512">
+<meta property="og:image:height" content="512">
+<meta property="og:site_name" content="Passdown">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@isogunlabs">
+<meta name="twitter:title" content="Passdown — Privacy Policy">
+<meta name="twitter:description" content="What data Passdown accesses, what it stores, and where it goes.">
+<meta name="twitter:image" content="https://passdown.isogunlabs.com/assets/img/passdown-logo-512.png">
+
+<link rel="icon" href="/assets/img/passdown-logo-144.png" sizes="144x144" type="image/png">
+<link rel="icon" href="/assets/img/passdown-logo-96.png" sizes="96x96" type="image/png">
+<link rel="apple-touch-icon" href="/assets/img/passdown-logo-144.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Passdown", "item": "https://passdown.isogunlabs.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Privacy Policy", "item": "https://passdown.isogunlabs.com/privacy.html" }
+  ]
+}
+</script>
+
+<link rel="stylesheet" href="/assets/css/site.css?v=1">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="logo" href="/">
+      <img src="/assets/img/passdown-logo-144.png" alt="" width="36" height="36">
+      <b>Passdown</b>
+    </a>
+    <div class="nav-mid">
+      <a href="index.html">Home</a>
+      <a href="docs.html">Documentation</a>
+      <a href="privacy.html" class="active">Privacy</a>
+      <a href="security.html">Security</a>
+    </div>
+    <div class="nav-right">
+      <span class="btn btn-disabled btn-sm">Coming soon to the Marketplace</span>
+      <button class="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-drawer">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div class="drawer-overlay"></div>
+<aside class="drawer" id="mobile-drawer">
+  <div class="d-head">
+    <a class="logo" href="/">
+      <img src="/assets/img/passdown-logo-144.png" alt="" width="32" height="32">
+      <b>Passdown</b>
+    </a>
+    <button class="d-close" aria-label="Close menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
+    </button>
+  </div>
+  <nav>
+    <a class="d-link" href="index.html">Home</a>
+    <a class="d-link" href="docs.html">Documentation</a>
+    <a class="d-link" href="privacy.html">Privacy</a>
+    <a class="d-link" href="security.html">Security</a>
+  </nav>
+  <a class="btn btn-teal" href="mailto:support@isogunlabs.com">Get notified at launch</a>
+</aside>
+
+<header class="page-hero">
+  <div class="wrap">
+    <h1 class="page-title">Privacy Policy</h1>
+    <div class="updated">Last updated: 4 August 2026</div>
+  </div>
+</header>
+
+<main class="wrap legal">
+
+  <span class="pill">Bounded storage · No third-party data sale</span>
+  <p class="lead">
+    Passdown is a Jira Service Management app built primarily on Atlassian Forge, with one
+    small hosted component used only to read your on-call schedule (see
+    <a href="security.html">Security</a> for why). This policy explains what data Passdown
+    accesses, what it stores, and what it does not do with either.
+  </p>
+
+  <section>
+    <h2>What Passdown accesses</h2>
+    <p>
+      To write a summary, Passdown reads a ticket's summary, comments, status history, and
+      relevant fields, using the <code>read:jira-work</code> scope. To post the handoff and
+      reassign a ticket, it uses <code>write:jira-work</code>. To detect shift boundaries, it
+      reads on-call participant data (who is currently on-call on a schedule) using
+      <code>read:ops-config:jira-service-management</code>. It does not read fields or
+      tickets unrelated to generating a summary or checking on-call state.
+    </p>
+  </section>
+
+  <section>
+    <h2>What Passdown stores</h2>
+    <p>
+      One small record per on-call schedule, holding only who is currently on-call for that
+      schedule. This record is overwritten every time the schedule is checked and is used
+      solely to detect the next change — it never accumulates history, and no ticket content
+      or generated summary text is ever stored. Passdown keeps no database of past handoffs
+      or summaries.
+    </p>
+  </section>
+
+  <section>
+    <h2>Where your data goes</h2>
+    <p>
+      Ticket content and summary generation stay inside Atlassian's platform: Passdown's
+      resolvers and its Atlassian-hosted AI model calls run entirely on Forge. The one
+      exception is reading the on-call schedule itself, which is proxied through a small
+      hosted component (a Cloudflare Worker) operated by Isogun Labs, using a token scoped
+      to that single read — see <a href="security.html">Security</a> for the full technical
+      detail and why this exists. That component does not see ticket content or generated
+      summary text; it only relays schedule/on-call data.
+    </p>
+  </section>
+
+  <section>
+    <h2>Data retention and deletion</h2>
+    <p>
+      The one stored record per schedule is deleted when the app is uninstalled. Since no
+      ticket content, comment text, or generated summaries are ever stored, there is nothing
+      further to retain or delete for those categories.
+    </p>
+  </section>
+
+  <section>
+    <h2>Contact</h2>
+    <p>
+      Questions about this policy or Passdown's data handling can be sent to
+      <a href="mailto:support@isogunlabs.com">support@isogunlabs.com</a>.
+    </p>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-bottom" style="border-top:0; padding-top:0;">
+      Passdown — Automated Shift Handoffs for JSM ·
+      <a href="index.html">Home</a> ·
+      <a href="docs.html">Documentation</a> ·
+      <a href="security.html">Security</a> ·
+      <a href="https://isogunlabs.com/">Isogun Labs</a><br>
+      An independent app by Isogun Labs, in development ahead of Atlassian Marketplace submission — not affiliated with or endorsed by Atlassian.
+    </div>
+  </div>
+</footer>
+
+<script src="/assets/js/site.js?v=1" defer></script>
+</body>
+</html>

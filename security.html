@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="author" content="Isogun Labs">
+<meta name="theme-color" content="#0B1B26">
+<title>Passdown — Security Policy</title>
+<meta name="description" content="Security policy for Passdown: authentication, scopes, data flow, and why the app does not carry the Runs on Atlassian badge.">
+<link rel="canonical" href="https://passdown.isogunlabs.com/security.html">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Passdown — Security Policy">
+<meta property="og:description" content="How Passdown authenticates, what it accesses, and why it does not carry the Runs on Atlassian badge.">
+<meta property="og:url" content="https://passdown.isogunlabs.com/security.html">
+<meta property="og:image" content="https://passdown.isogunlabs.com/assets/img/passdown-logo-512.png">
+<meta property="og:image:width" content="512">
+<meta property="og:image:height" content="512">
+<meta property="og:site_name" content="Passdown">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@isogunlabs">
+<meta name="twitter:title" content="Passdown — Security Policy">
+<meta name="twitter:description" content="How Passdown authenticates, what it accesses, and why it does not carry the Runs on Atlassian badge.">
+<meta name="twitter:image" content="https://passdown.isogunlabs.com/assets/img/passdown-logo-512.png">
+
+<link rel="icon" href="/assets/img/passdown-logo-144.png" sizes="144x144" type="image/png">
+<link rel="icon" href="/assets/img/passdown-logo-96.png" sizes="96x96" type="image/png">
+<link rel="apple-touch-icon" href="/assets/img/passdown-logo-144.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Passdown", "item": "https://passdown.isogunlabs.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Security Policy", "item": "https://passdown.isogunlabs.com/security.html" }
+  ]
+}
+</script>
+
+<link rel="stylesheet" href="/assets/css/site.css?v=1">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="logo" href="/">
+      <img src="/assets/img/passdown-logo-144.png" alt="" width="36" height="36">
+      <b>Passdown</b>
+    </a>
+    <div class="nav-mid">
+      <a href="index.html">Home</a>
+      <a href="docs.html">Documentation</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="security.html" class="active">Security</a>
+    </div>
+    <div class="nav-right">
+      <span class="btn btn-disabled btn-sm">Coming soon to the Marketplace</span>
+      <button class="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-drawer">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div class="drawer-overlay"></div>
+<aside class="drawer" id="mobile-drawer">
+  <div class="d-head">
+    <a class="logo" href="/">
+      <img src="/assets/img/passdown-logo-144.png" alt="" width="32" height="32">
+      <b>Passdown</b>
+    </a>
+    <button class="d-close" aria-label="Close menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
+    </button>
+  </div>
+  <nav>
+    <a class="d-link" href="index.html">Home</a>
+    <a class="d-link" href="docs.html">Documentation</a>
+    <a class="d-link" href="privacy.html">Privacy</a>
+    <a class="d-link" href="security.html">Security</a>
+  </nav>
+  <a class="btn btn-teal" href="mailto:support@isogunlabs.com">Get notified at launch</a>
+</aside>
+
+<header class="page-hero">
+  <div class="wrap">
+    <h1 class="page-title">Security Policy</h1>
+    <div class="updated">Last updated: 4 August 2026</div>
+  </div>
+</header>
+
+<main class="wrap legal">
+
+  <span class="pill">OAuth-only · Minimum-viable scopes</span>
+  <span class="pill pill-warn">Does not carry the "Runs on Atlassian" badge</span>
+  <p class="lead">
+    Passdown is built to keep the smallest security footprint the automated shift-handoff
+    feature can actually work with. This page explains how Passdown authenticates, what it
+    accesses, and — plainly, because it's a real and visible difference from Isogun Labs'
+    other apps — why it does not currently qualify for Atlassian's "Runs on Atlassian" badge.
+    See also the <a href="privacy.html">Privacy Policy</a> for what data is read and why.
+  </p>
+
+  <section>
+    <h2>Runs on Atlassian eligibility</h2>
+    <p>
+      Passdown does <strong>not</strong> currently qualify for the "Runs on Atlassian" badge.
+      Every other Isogun Labs app can make that claim; Passdown cannot, and we'd rather say so
+      plainly than let it go unstated. The reason is specific: reading Jira Service
+      Management's on-call schedule from an app's own system identity (Forge's <code>asApp()</code>)
+      fails on the relevant JSM Ops API, a confirmed platform limitation, not a bug in
+      Passdown's code — JSM Ops API permissions are strictly user-oriented, and Forge apps have
+      no supported workaround other than acting on behalf of a specific user. The only working
+      path is a small hosted component (a Cloudflare Worker) that exchanges Passdown's system
+      token for a token impersonating one designated user, then reads the schedule directly.
+      That hosted component and the token exchange it performs are real, disclosed external
+      egress, which is what removes "Runs on Atlassian" eligibility for the base install — not
+      just for an optional add-on. This is separate from Forge's 0% revenue-share
+      qualification, which is unaffected.
+    </p>
+  </section>
+
+  <section>
+    <h2>Authentication &amp; authorization</h2>
+    <p>
+      Passdown authenticates entirely through Atlassian Forge using OAuth 2.0 — there is no
+      separate login, password, or API key for Passdown itself. Ticket reads and writes run as
+      the requesting user (<code>asUser</code>) wherever a user is in session, such as the
+      on-demand summary panel. The scheduled shift-boundary check has no user in session, so it
+      runs as the app (<code>asApp</code>), and the one call this cannot cover — reading the
+      on-call schedule — is handled by the hosted component described above, which
+      impersonates one designated user via Forge's own offline-user-authorization mechanism
+      rather than holding a standing broad credential.
+    </p>
+  </section>
+
+  <section>
+    <h2>Scopes requested</h2>
+    <ul>
+      <li><code>read:jira-work</code> — read ticket content needed to generate a summary.</li>
+      <li><code>write:jira-work</code> — post the handoff comment and reassign the ticket.</li>
+      <li><code>read:ops-config:jira-service-management</code> (with impersonation allowed for the shift-boundary check only) — read who is currently on-call.</li>
+      <li><code>storage:app</code> — the one bounded record per on-call schedule described below.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Data flow</h2>
+    <p>
+      On-demand summaries: a Forge resolver reads a ticket's content as the requesting user,
+      generates the summary text via Atlassian's own Forge LLMs API, and returns it to the
+      panel. Nothing is written to storage in this path. Automated handoffs: a scheduled
+      trigger calls the hosted Cloudflare Worker to check on-call state for each schedule; when
+      it detects a change, it queries the outgoing person's open tickets (as the app), generates
+      each summary the same way as the on-demand path, posts the comment, mentions the incoming
+      person, and reassigns the ticket. The hosted component only ever sees on-call
+      participant identifiers — never ticket content or generated summary text.
+    </p>
+  </section>
+
+  <section>
+    <h2>Hosting &amp; subprocessors</h2>
+    <p>
+      All ticket-facing logic and AI generation run on Atlassian Forge. The one subprocessor is
+      Cloudflare (Workers), operated by Isogun Labs, used solely to relay the on-call-schedule
+      read described above. It receives a short-lived, audience-scoped token minted for that
+      single purpose and validates every request against Atlassian's own JWKS before acting on
+      it.
+    </p>
+  </section>
+
+  <section>
+    <h2>Data storage &amp; encryption</h2>
+    <p>
+      Passdown's only persisted data is one Forge KVS (<code>storage:app</code>) record per
+      on-call schedule, holding the current on-call participant identifier. It is overwritten
+      on every check and never grows into a history. No ticket content, comments, or generated
+      summary text are ever stored. All requests, including the hosted-component call, use
+      TLS-encrypted channels in transit.
+    </p>
+  </section>
+
+  <section>
+    <h2>Logging</h2>
+    <p>
+      Passdown logs operational facts only — for example, that a shift boundary was detected on
+      a given schedule, or that a ticket's handoff failed and was skipped. Logs never contain
+      full ticket content, comment text, or generated summaries, and never contain credentials.
+    </p>
+  </section>
+
+  <section>
+    <h2>Vulnerability &amp; dependency management</h2>
+    <p>
+      Passdown pins Atlassian Forge SDK dependencies to released, non-prerelease versions and
+      keeps the Cloudflare Worker's dependency surface minimal (token validation and a single
+      outbound API call). Updates are reviewed and redeployed through the Forge CLI and
+      Wrangler respectively.
+    </p>
+  </section>
+
+  <section>
+    <h2>Access control</h2>
+    <p>
+      Passdown is built and operated by a single developer. Source and deployment access is
+      limited to the developer's Atlassian developer account and Cloudflare account, both
+      protected with two-factor authentication.
+    </p>
+  </section>
+
+  <section>
+    <h2>Reporting a security issue</h2>
+    <p>
+      If you believe you've found a security vulnerability in Passdown, please report it to
+      <a href="mailto:support@isogunlabs.com">support@isogunlabs.com</a>. We aim to
+      acknowledge reports promptly and will work with you on responsible disclosure.
+    </p>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-bottom" style="border-top:0; padding-top:0;">
+      Passdown — Automated Shift Handoffs for JSM ·
+      <a href="index.html">Home</a> ·
+      <a href="docs.html">Documentation</a> ·
+      <a href="privacy.html">Privacy</a> ·
+      <a href="https://isogunlabs.com/">Isogun Labs</a><br>
+      An independent app by Isogun Labs, in development ahead of Atlassian Marketplace submission — not affiliated with or endorsed by Atlassian.
+    </div>
+  </div>
+</footer>
+
+<script src="/assets/js/site.js?v=1" defer></script>
+</body>
+</html>

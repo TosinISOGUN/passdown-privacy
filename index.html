@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="author" content="Isogun Labs">
+<meta name="theme-color" content="#0B1B26">
+<title>Passdown — Automated Shift Handoffs for Jira Service Management</title>
+<meta name="description" content="Passdown reads what happened during a shift and writes the handoff brief for you — posted, mentioned, and reassigned automatically the moment the on-call schedule changes.">
+<link rel="canonical" href="https://passdown.isogunlabs.com/">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Passdown — Automated Shift Handoffs for JSM">
+<meta property="og:description" content="No one has to remember to write the handoff. Passdown reads what happened during a shift and posts the brief automatically.">
+<meta property="og:url" content="https://passdown.isogunlabs.com/">
+<meta property="og:image" content="https://passdown.isogunlabs.com/assets/img/passdown-logo-512.png">
+<meta property="og:image:width" content="512">
+<meta property="og:image:height" content="512">
+<meta property="og:site_name" content="Passdown">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@isogunlabs">
+<meta name="twitter:title" content="Passdown — Automated Shift Handoffs for JSM">
+<meta name="twitter:description" content="No one has to remember to write the handoff. Passdown reads what happened during a shift and posts the brief automatically.">
+<meta name="twitter:image" content="https://passdown.isogunlabs.com/assets/img/passdown-logo-512.png">
+
+<link rel="icon" href="/assets/img/passdown-logo-144.png" sizes="144x144" type="image/png">
+<link rel="icon" href="/assets/img/passdown-logo-96.png" sizes="96x96" type="image/png">
+<link rel="apple-touch-icon" href="/assets/img/passdown-logo-144.png">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "name": "Isogun Labs",
+      "url": "https://isogunlabs.com/",
+      "logo": "https://passdown.isogunlabs.com/assets/img/passdown-logo-144.png",
+      "sameAs": [
+        "https://www.linkedin.com/company/isogun-labs",
+        "https://x.com/isogunlabs",
+        "https://www.instagram.com/isogunlabs/",
+        "https://www.youtube.com/@isogun_labs"
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Passdown", "item": "https://passdown.isogunlabs.com/" }
+      ]
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "Passdown — Automated Shift Handoffs for JSM",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Atlassian Jira Service Management Cloud",
+      "url": "https://passdown.isogunlabs.com/",
+      "image": "https://passdown.isogunlabs.com/assets/img/passdown-logo-512.png",
+      "description": "Passdown reads what happened during a support shift and writes a plain-language handoff brief automatically at the shift boundary — posted as a comment, the incoming person mentioned and assigned. Also summarizes any single ticket on demand.",
+      "publisher": { "@type": "Organization", "name": "Isogun Labs", "url": "https://isogunlabs.com/" }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question", "name": "Does Passdown replace my on-call scheduling tool?",
+          "acceptedAnswer": { "@type": "Answer", "text": "No. Passdown reads the on-call schedule you already maintain in Jira Service Management — it never builds or competes with rotation or delegation logic." }
+        },
+        {
+          "@type": "Question", "name": "Does Passdown carry the Runs on Atlassian badge?",
+          "acceptedAnswer": { "@type": "Answer", "text": "No. Reading JSM's on-call schedule reliably requires a small hosted component outside Forge's own sandbox, so the base install does not currently qualify for Runs on Atlassian." }
+        },
+        {
+          "@type": "Question", "name": "Does Passdown post to Slack or Teams?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Not yet. Slack and Teams push is planned as a future, explicitly opt-in admin setting — it is off by default and not part of the current release." }
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+<link rel="stylesheet" href="/assets/css/site.css?v=1">
+</head>
+<body>
+
+<div class="util">
+  <div class="wrap">
+    <div class="u-left">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16v16H4z"/><path d="M4 9h16M9 4v16"/></svg>
+      <a href="https://isogunlabs.com/">Part of Isogun Labs</a>
+    </div>
+    <div class="u-right"><a href="mailto:support@isogunlabs.com">support@isogunlabs.com</a></div>
+  </div>
+</div>
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="logo" href="/">
+      <img src="/assets/img/passdown-logo-144.png" alt="" width="36" height="36">
+      <b>Passdown</b>
+    </a>
+    <div class="nav-mid">
+      <a href="#how">How it works</a>
+      <a href="docs.html">Documentation</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="security.html">Security</a>
+    </div>
+    <div class="nav-right">
+      <span class="btn btn-disabled btn-sm">Coming soon to the Marketplace</span>
+      <button class="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-drawer">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div class="drawer-overlay"></div>
+<aside class="drawer" id="mobile-drawer">
+  <div class="d-head">
+    <a class="logo" href="/">
+      <img src="/assets/img/passdown-logo-144.png" alt="" width="32" height="32">
+      <b>Passdown</b>
+    </a>
+    <button class="d-close" aria-label="Close menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
+    </button>
+  </div>
+  <nav>
+    <a class="d-link" href="#how">How it works</a>
+    <a class="d-link" href="docs.html">Documentation</a>
+    <a class="d-link" href="privacy.html">Privacy</a>
+    <a class="d-link" href="security.html">Security</a>
+  </nav>
+  <a class="btn btn-teal" href="mailto:support@isogunlabs.com">Get notified at launch</a>
+</aside>
+
+<header class="hero">
+  <div class="hero-facets" aria-hidden="true"></div>
+  <div class="hero-glow" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="hero-copy">
+      <span class="eyebrow"><span class="dot"></span> In development — not yet on the Marketplace</span>
+      <h1>The shift handoff you didn't have to write.</h1>
+      <p class="lead">When a shift ends, Passdown reads what actually happened — the tickets worked, what's blocking, what's next — and writes the handoff itself. Posted as a comment, the incoming person mentioned and the ticket reassigned. No one has to remember to leave a note.</p>
+      <div class="hero-actions">
+        <a class="btn btn-teal" href="mailto:support@isogunlabs.com">Get notified at launch
+          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a class="btn-text" href="#how">See how it works
+          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+      <ul class="trust-chips">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8Z"/></svg> Fires automatically at shift boundaries</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg> Guaranteed notification via reassignment</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9"/><path d="M3 12h6M3 12l3-3M3 12l3 3"/></svg> Reads your existing on-call schedule, builds nothing new</li>
+      </ul>
+    </div>
+
+    <div class="showcase-frame">
+      <div class="real-shot">
+        <div class="bar" aria-hidden="true"><i class="r"></i><i class="y"></i><i class="g"></i><span class="url">Jira Service Management</span></div>
+        <div class="frame" style="aspect-ratio:915/516;">
+          <img src="/assets/img/shot-handoff-comment.png" width="915" height="516" alt="A real Passdown-authored comment on a Jira ticket: '@Oluwatomisin Isogun shift handoff:' followed by a plain-language summary of what happened during the shift." loading="eager" decoding="async">
+          <span class="callout"><span class="dot2"></span> Real screenshot — unedited</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="block reveal" id="how">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker">How it works</div>
+      <h2>From <span class="teal">shift boundary</span> to a written brief</h2>
+      <p>No manual step from the outgoing agent — Passdown watches the schedule you already maintain and writes the handoff the moment it changes.</p>
+    </div>
+    <div class="flow">
+      <div class="flow-step">
+        <div class="num">1</div>
+        <div class="real-shot" style="margin-bottom:16px;">
+          <div class="frame" style="aspect-ratio:1262/790;">
+            <img src="/assets/img/shot-oncall-schedule.png" width="1262" height="790" alt="A real Jira Service Management on-call schedule, with routing rules, escalation policy, and a rotation timeline showing who is on call." loading="lazy" decoding="async" style="object-position:bottom;">
+          </div>
+        </div>
+        <h3>A shift boundary happens</h3>
+        <p>Read straight from JSM's native on-call schedule — no separate rotation to configure.</p>
+      </div>
+      <div class="flow-arrow" style="left:calc(33.33% - 14px);" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </div>
+      <div class="flow-step">
+        <div class="num">2</div>
+        <div class="real-shot" style="margin-bottom:16px;">
+          <div class="frame" style="aspect-ratio:16/10;">
+            <img src="/assets/img/shot-summarize-result.png" width="1559" height="793" alt="Passdown's on-demand summary panel on a real Jira ticket, showing a generated plain-language summary of the ticket's history." loading="lazy" decoding="async" style="object-position:top;">
+          </div>
+        </div>
+        <h3>Passdown writes the brief</h3>
+        <p>Every open ticket the outgoing person had gets a plain-language summary: what happened, what's blocking, what's next.</p>
+      </div>
+      <div class="flow-arrow" style="left:calc(66.66% - 14px);" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </div>
+      <div class="flow-step">
+        <div class="num">3</div>
+        <div class="real-shot" style="margin-bottom:16px;">
+          <div class="frame" style="aspect-ratio:915/516;">
+            <img src="/assets/img/shot-handoff-comment.png" width="915" height="516" alt="The same real Passdown comment: the incoming person mentioned by name in the handoff brief." loading="lazy" decoding="async">
+          </div>
+        </div>
+        <h3>Posted, mentioned, reassigned</h3>
+        <p>The incoming person is @-mentioned and the ticket is reassigned to them — a guaranteed signal, not just a hopeful notification.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block reveal">
+  <div class="wrap wrap-wide">
+    <div class="section-head">
+      <span class="real-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg> Not a mockup</span>
+      <div class="kicker">One shift boundary, three tickets</div>
+      <h2>Real handoffs, <span class="teal">unedited</span></h2>
+      <p>One outgoing person, one shift change — Passdown found every open ticket they had and wrote the handoff for each, on its own, in the same pass. These are unedited screenshots of that run.</p>
+    </div>
+    <div class="collage">
+      <div class="real-shot">
+        <div class="bar" aria-hidden="true"><i class="r"></i><i class="y"></i><i class="g"></i><span class="url">PT-5</span></div>
+        <div class="frame">
+          <img src="/assets/img/shot-handoff-ticket-1.png" width="1775" height="1900" alt="Real Passdown comment on ticket PT-5, 'Fix the responsiveness of the About Page for the mobile view', posted automatically at a shift boundary." loading="lazy" decoding="async" style="object-position:center 58%;">
+          <span class="callout"><span class="dot2"></span> Posted at the shift boundary</span>
+        </div>
+      </div>
+      <div class="real-shot">
+        <div class="bar" aria-hidden="true"><i class="r"></i><i class="y"></i><i class="g"></i><span class="url">PT-4</span></div>
+        <div class="frame">
+          <img src="/assets/img/shot-handoff-ticket-2.png" width="1777" height="2102" alt="Real Passdown comment on ticket PT-4, 'Write the onboarding documentation for the new hires', with the incoming person mentioned by name." loading="lazy" decoding="async" style="object-position:center 55%;">
+          <span class="callout"><span class="dot2"></span> Incoming person @-mentioned</span>
+        </div>
+      </div>
+      <div class="real-shot">
+        <div class="bar" aria-hidden="true"><i class="r"></i><i class="y"></i><i class="g"></i><span class="url">PT-3</span></div>
+        <div class="frame">
+          <img src="/assets/img/shot-handoff-ticket-3.png" width="1754" height="2162" alt="Real Passdown comment on ticket PT-3, 'Fix the pagination bug at the landing page', a generated brief specific to that ticket's own history." loading="lazy" decoding="async" style="object-position:center 55%;">
+          <span class="callout"><span class="dot2"></span> Written from that ticket's own history</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block reveal" style="background:var(--panel); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+  <div class="wrap wrap-wide">
+    <div class="section-head">
+      <div class="kicker">One engine, two jobs</div>
+      <h2>The same brief, run two ways</h2>
+      <p>Whole-shift automation is the flagship. The same engine also runs on a single ticket, on demand.</p>
+    </div>
+    <div class="split">
+      <div>
+        <div class="split-label">Automatic — shift handoff</div>
+        <div class="real-shot">
+          <div class="frame" style="aspect-ratio:4/3;">
+            <img src="/assets/img/shot-oncall-schedule.png" width="1262" height="790" alt="The real on-call schedule Passdown reads to detect a shift boundary." loading="lazy" decoding="async" style="object-position:bottom;">
+          </div>
+        </div>
+      </div>
+      <div class="split-arrow" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </div>
+      <div>
+        <div class="split-label">On demand — per ticket</div>
+        <div class="real-shot">
+          <div class="frame" style="aspect-ratio:4/3;">
+            <img src="/assets/img/shot-summarize-button.png" width="1911" height="940" alt="The on-demand 'Summarize this ticket' button in Passdown's panel on a real Jira ticket." loading="lazy" decoding="async" style="object-position:center 42%;">
+          </div>
+        </div>
+      </div>
+    </div>
+    <p style="text-align:center; color:var(--body); margin-top:26px; max-width:60ch; margin-left:auto; margin-right:auto;">
+      Anyone catching up on a single ticket — mid-shift, after time off, or picking up an escalation — can get the same plain-language summary from a panel on that ticket, without waiting for a shift boundary.
+    </p>
+  </div>
+</section>
+
+<section class="block reveal">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker">Why it's built this way</div>
+      <h2>Honest by default</h2>
+      <p>No invented details, no rebuilt scheduling, no growing storage.</p>
+    </div>
+    <div class="principles">
+      <div class="principle">
+        <div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8Z"/></svg></div>
+        <h3>Fully automatic</h3>
+        <p>No button to click at shift end. The brief is written and posted on its own.</p>
+      </div>
+      <div class="principle">
+        <div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg></div>
+        <h3>Nothing invented</h3>
+        <p>The brief reflects what the ticket's own history says — no fabricated status or metrics.</p>
+      </div>
+      <div class="principle">
+        <div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></div>
+        <h3>Guaranteed notification</h3>
+        <p>The incoming person is reassigned the ticket, not just mentioned — a signal that can't be missed.</p>
+      </div>
+      <div class="principle">
+        <div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9"/><path d="M3 12h6M3 12l3-3M3 12l3 3"/></svg></div>
+        <h3>Bounded storage</h3>
+        <p>Only ever one small record per on-call schedule, overwritten each check — never a growing history.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block reveal" style="background:var(--panel); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+  <div class="wrap">
+    <div class="roa-note">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 9v4M12 17h.01"/><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/></svg>
+      <p>Passdown does not currently carry the "Runs on Atlassian" badge. Reading JSM's on-call schedule reliably requires a small hosted component outside Forge's own sandbox — see the <a href="security.html">Security page</a> for the full explanation.</p>
+    </div>
+  </div>
+</section>
+
+<section class="block reveal">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker">FAQ</div>
+      <h2>Questions people actually ask</h2>
+    </div>
+    <div class="faq-list">
+      <details class="faq-item" open>
+        <summary>Does Passdown replace my on-call scheduling tool?
+          <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        </summary>
+        <p>No. Passdown reads the on-call schedule you already maintain in Jira Service Management — it never builds or competes with rotation or delegation logic.</p>
+      </details>
+      <details class="faq-item">
+        <summary>What happens if the on-call person is a team, not an individual?
+          <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        </summary>
+        <p>That schedule is skipped for automatic handoffs — there's no single incoming person to assign or mention. This is a known, current limitation, not a silent failure; it's visible in the app's logs.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Does Passdown post to Slack or Teams?
+          <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        </summary>
+        <p>Not yet. Slack and Teams push is planned as a future, explicitly opt-in admin setting — off by default and not part of the current build. See <a href="docs.html#roadmap">Documentation</a>.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Why doesn't Passdown carry the Runs on Atlassian badge?
+          <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        </summary>
+        <p>Reading JSM's on-call schedule reliably from an app currently requires a small hosted component outside Forge's own sandbox. That's real, disclosed external egress — see the <a href="security.html">Security page</a> for the full detail.</p>
+      </details>
+      <details class="faq-item">
+        <summary>What data does Passdown access or store?
+          <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        </summary>
+        <p>Ticket content needed to write a summary, and one small record per on-call schedule (who's currently on-call) so it can detect the next change. See the <a href="privacy.html">privacy policy</a> for detail.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="cta reveal">
+  <div class="cta-facets" aria-hidden="true"></div>
+  <div class="wrap">
+    <h2>Stop starting your shift blind</h2>
+    <p>Passdown is in active development, ahead of its Atlassian Marketplace submission. Leave your email and we'll let you know the moment it's available to install.</p>
+    <div class="cta-actions">
+      <a class="btn btn-teal" href="mailto:support@isogunlabs.com">Get notified at launch
+        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <a class="btn btn-ghost-light" href="mailto:support@isogunlabs.com">Talk with us</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <a class="logo" href="/">
+          <img src="/assets/img/passdown-logo-144.png" alt="" width="32" height="32">
+          <b>Passdown</b>
+        </a>
+        <p>Automated shift handoffs for Jira Service Management, written from what actually happened.</p>
+      </div>
+      <div class="foot-links">
+        <a href="docs.html">Documentation</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="security.html">Security</a>
+        <a href="https://isogunlabs.com/">Isogun Labs</a>
+        <a href="mailto:support@isogunlabs.com">Contact</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      Passdown is an independent app by <a href="https://isogunlabs.com/">Isogun Labs</a>, in development ahead of Atlassian Marketplace submission — not affiliated with or endorsed by Atlassian.<br>
+      © 2026 Isogun Labs. All rights reserved.
+    </div>
+  </div>
+</footer>
+
+<script src="/assets/js/site.js?v=1" defer></script>
+</body>
+</html>
