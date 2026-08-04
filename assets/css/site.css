@@ -168,23 +168,14 @@ section.block { padding:80px 0; }
 .promo-inner .frame { position:relative; overflow:hidden; background:var(--panel); }
 .promo-inner .frame img { width:100%; height:100%; object-fit:cover; display:block; }
 .promo-caption { padding:10px 16px 13px; font-size:.78rem; color:var(--body); border-top:1px solid var(--line); }
+.promo-card--tight { padding:16px; border-radius:12px; }
 
-/* real product screenshots — framed + annotated */
-.real-shot { border-radius:8px; overflow:hidden; border:1px solid var(--line); box-shadow:var(--shadow); background:var(--white); }
-.real-shot .bar { display:flex; align-items:center; gap:7px; padding:9px 13px; background:#EAF3F3; border-bottom:1px solid var(--line); }
-.real-shot .bar i { width:9px; height:9px; border-radius:50%; }
-.real-shot .bar .r{background:#F87171;} .real-shot .bar .y{background:#FBBF24;} .real-shot .bar .g{background:#34D399;}
-.real-shot .bar .url { margin-left:6px; font-size:.7rem; color:var(--body); background:var(--white); border:1px solid var(--line); border-radius:6px; padding:3px 10px; }
-.real-shot .frame { position:relative; overflow:hidden; background:var(--panel); }
-.real-shot .frame img { width:100%; height:100%; object-fit:cover; display:block; }
+/* real product screenshots — badge */
 .real-badge { display:inline-flex; align-items:center; gap:6px; font-size:.72rem; font-weight:800; letter-spacing:.04em; text-transform:uppercase; color:var(--teal-600); background:var(--teal-50); border:1px solid var(--teal-100); border-radius:999px; padding:4px 11px; margin-bottom:10px; }
 .real-badge svg { width:12px; height:12px; }
 
 /* collage grid of real handoff tickets */
 .collage { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
-.collage .real-shot .frame { aspect-ratio:4/3; }
-
-/* RoA disclosure banner */
 
 /* FAQ accordion */
 .faq-list { max-width:760px; margin:0 auto; }
