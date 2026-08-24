@@ -193,10 +193,11 @@
   <section>
     <h2>Vulnerability &amp; dependency management</h2>
     <p>
-      Passdown pins Atlassian Forge SDK dependencies to released, non-prerelease versions and
-      keeps the Cloudflare Worker's dependency surface minimal (token validation and a single
-      outbound API call). Updates are reviewed and redeployed through the Forge CLI and
-      Wrangler respectively.
+      Passdown pins Atlassian Forge SDK dependencies — two packages use pre-release versions
+      where the stable release does not yet support required UI Kit features — and keeps the
+      Cloudflare Worker's dependency surface minimal (token validation and a single outbound
+      API call). Updates are reviewed and redeployed through the Forge CLI and Wrangler
+      respectively.
     </p>
   </section>
 
