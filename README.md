@@ -55,5 +55,5 @@ python3 -m http.server 8000
   Hygiene's own sites, not an oversight.
 - Slack/Teams push is documented in `docs.html` as **planned**, not shipped — don't reword
   that section to imply it's currently available.
-- Marketplace listing is live at https://marketplace.atlassian.com/apps/2948459916 — all
+- Marketplace listing is live at https://marketplace.atlassian.com/apps/3571155481 — all
   CTAs across the site point to this URL.
